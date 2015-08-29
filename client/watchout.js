@@ -3,6 +3,14 @@ var svgContainer = d3.select('body').append('svg')
                                     .attr('width', window.innerWidth)
                                     .attr('height', window.innerHeight - 50)
 
+var scoreNode = d3.select('.current > span');
+var score = 0;
+
+setInterval(function() {
+  scoreNode.text(score);
+  score++;
+}, 1000);
+
 var imageWidth = 100;
 var imageHeight = 200;
 var timCollisions = 0;
@@ -115,6 +123,8 @@ d3.select('body').on('keydown', function() {
                                   d3.event.preventDefault(); // prevent the default action (scroll / move caret)
                               });  
 
+var highScoreNode = d3.select('.high > span');
+
 setInterval(
   function(){
   var timAlreadyCollided = false;
@@ -140,6 +150,14 @@ setInterval(
                             timAlreadyCollided = true;
                           }
 
+                          if(blaineCollisions + timCollisions > 20) {
+                            highScoreNode.text(Math.max(Number(highScoreNode.text(), score)));
+                            timCollisions = 0;
+                            blaineCollisions = 0;
+                            scoreNode.text('0');
+                            scoreboard.text('0');
+                            score = 0; 
+                          }
                           scoreboard.text(blaineCollisions + timCollisions);
                         }
                       });
