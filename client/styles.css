@@ -10,3 +10,12 @@ Feel free to use it if you like. */
 .enemy {
   display: block;
 }
+
+.scoreboard {
+  float: left;
+}
+
+.boeing {
+  float: right;
+  height: 100px;
+}
