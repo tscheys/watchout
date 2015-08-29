@@ -151,7 +151,7 @@ setInterval(
                           }
 
                           if(blaineCollisions + timCollisions > 20) {
-                            highScoreNode.text(Math.max(Number(highScoreNode.text(), score)));
+                            highScoreNode.text(Math.max(Number(highScoreNode.text()), score));
                             timCollisions = 0;
                             blaineCollisions = 0;
                             scoreNode.text('0');
