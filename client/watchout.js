@@ -8,14 +8,16 @@ var imageHeight = 200;
 
 var getRandomInBoundsIndex = function(direction) {
   var index = Math.random()*d3.select('svg').attr(direction);
-  var bounds = direction === 'width' ? imageWidth : imageHeight;
+  return checkBounds(index,direction);
+}
 
+var checkBounds = function (index, direction) {
+  var bounds = direction === 'width' ? imageWidth : imageHeight;
   if(index < bounds) {
     index += bounds/2 + 30;
   } else if((d3.select('svg').attr(direction) - index) < bounds) {
     index -= bounds/2 + bounds/3 + 20;
   }
-
   return index;
 }
 
@@ -97,35 +99,35 @@ d3.select('body').on('keydown', function() {
                                   var moveSpeed = 20;
                                   switch(d3.event.keyCode) {
                                       case 37: // left
-                                      d3.select('.tim').attr('x', parseInt(d3.select('.tim').attr('x')) - moveSpeed);
+                                        d3.select('.tim').attr('x', Math.max(parseInt(d3.select('.tim').attr('x')) - moveSpeed, imageWidth));           
                                       break;
 
                                       case 38: // up
-                                      d3.select('.tim').attr('y', parseInt(d3.select('.tim').attr('y')) - moveSpeed);
+                                      d3.select('.tim').attr('y', Math.max(parseInt(d3.select('.tim').attr('y')) - moveSpeed, imageHeight));
                                       break;
 
                                       case 39: // right
-                                      d3.select('.tim').attr('x', parseInt(d3.select('.tim').attr('x')) + moveSpeed);
+                                      d3.select('.tim').attr('x', Math.min(parseInt(d3.select('.tim').attr('x')) + moveSpeed, d3.select('svg').attr('width') - imageWidth));
                                       break;
 
                                       case 40: // down
-                                      d3.select('.tim').attr('y', parseInt(d3.select('.tim').attr('y')) + moveSpeed);
+                                      d3.select('.tim').attr('y', Math.min(parseInt(d3.select('.tim').attr('y')) + moveSpeed, d3.select('svg').attr('height') - imageHeight));
                                       break;
 
                                       case 65: // left
-                                      d3.select('.blaine').attr('x', parseInt(d3.select('.blaine').attr('x')) - moveSpeed);
+                                      d3.select('.blaine').attr('x', Math.max(parseInt(d3.select('.blaine').attr('x')) - moveSpeed, imageWidth));
                                       break;
 
                                       case 87: // up
-                                      d3.select('.blaine').attr('y', parseInt(d3.select('.blaine').attr('y')) - moveSpeed);
+                                      d3.select('.blaine').attr('y', Math.max(parseInt(d3.select('.blaine').attr('y')) - moveSpeed, imageHeight));
                                       break;
 
                                       case 68: // right
-                                      d3.select('.blaine').attr('x', parseInt(d3.select('.blaine').attr('x')) + moveSpeed);
+                                      d3.select('.blaine').attr('x', Math.min(parseInt(d3.select('.blaine').attr('x')) + moveSpeed, d3.select('svg').attr('width') - imageWidth));
                                       break;
 
                                       case 83: // down
-                                      d3.select('.blaine').attr('y', parseInt(d3.select('.blaine').attr('y')) + moveSpeed);
+                                      d3.select('.blaine').attr('y', Math.min(parseInt(d3.select('.blaine').attr('y')) + moveSpeed, d3.select('svg').attr('height') - imageHeight));
                                       break;
 
                                       default: 
@@ -140,4 +142,4 @@ setInterval(
                      .duration(2000)
                      .attr('x', function(d){ return getRandomInBoundsIndex('width')  })
                      .attr('y', function(d){ return getRandomInBoundsIndex('height')});
-}, 2000)        
+}, 2000)
